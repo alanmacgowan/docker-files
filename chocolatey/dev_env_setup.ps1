@@ -1,4 +1,5 @@
 Disable-UAC
+$ConfirmPreference = "None" #ensure installing powershell modules don't prompt on needed dependencies
 
 # Get the base URI path from the ScriptToCall value
 $bstrappackage = "-bootstrapPackage"
@@ -23,8 +24,10 @@ executeScript "SystemConfiguration.ps1";
 executeScript "CommonDevTools.ps1";
 executeScript "RemoveDefaultApps.ps1";
 executeScript "HyperV.ps1";
-executeScript "Docker.ps1";
+RefreshEnv
 executeScript "WSL.ps1";
+RefreshEnv
+executeScript "Docker.ps1";
 executeScript "Browsers.ps1";
 
 #--- Tools ---
@@ -49,6 +52,14 @@ choco install -y azure-cli
 Install-Module -Force Az
 choco install -y microsoftazurestorageexplorer
 choco install -y terraform
+
+#---Other---
+choco install -y microsoft-teams
+
+# checkout projects
+mkdir C:\github
+cd C:\github
+git.exe clone https://github.com/PowerShell/PowerShell
 
 #--- reenabling critial items ---
 Enable-UAC
