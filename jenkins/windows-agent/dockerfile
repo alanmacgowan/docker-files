@@ -1,0 +1,9 @@
+FROM windows-java:1.8.0.111
+
+SHELL ["powershell"]
+ARG BASE_URL
+ARG SECRET
+
+RUN Invoke-WebRequest $('{0}/jnlpJars/slave.jar' -f $env:BASE_URL) -OutFile 'slave.jar' -UseBasicParsing ; 
+
+ENTRYPOINT ["C:\\java-1.8.0-openjdk-1.8.0.111-3.b15.ojdkbuild.windows.x86_64\\bin\\java.exe", "-jar", ".\\slave.jar"]

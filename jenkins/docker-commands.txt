@@ -1,0 +1,17 @@
+cd windows-base-java
+docker build -t windows-java:1.8.0.111 .
+
+cd windows-agent
+docker build --build-arg BASE_URL=http://192.168.0.9:8080 -t jenkins_windows_agent:2.0 
+
+//change jenkins server url and secret id
+docker run -ti jenkins_windows_agent:2.0 -jnlpUrl http://192.168.1.9:8080/computer/docker-win-agent/slave-agent.jnlp -secret 9f2745a275f7652eba554de52afd149b2d2a764e28c8904da24a48b708578562 -workDir "c:\jenkins\"
+
+
+
+resources:
+https://blog-alexellis-io.cdn.ampproject.org/v/s/blog.alexellis.io/3-steps-to-msbuild-with-docker/amp/?usqp=mq331AQFKAGwASA%3D&amp_js_v=0.1
+https://github.com/StefanScherer/dockerfiles-windows/blob/main/jenkins/Dockerfile
+https://github.com/alexellis/windowscontainers-jenkinsci/blob/master/agent/Dockerfile
+https://blog.alexellis.io/continuous-integration-docker-windows-containers/
+
